@@ -1,0 +1,10 @@
+﻿@helper HelperName(string name, string classe) {
+    <input type="submit" value="@name" class="@classe" />
+ }
+
+@helper Message(object mensagem, string message)
+    {
+        <div class="alert alert-success">
+            @message
+        </div>
+    }

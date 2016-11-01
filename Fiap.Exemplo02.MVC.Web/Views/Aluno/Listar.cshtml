@@ -1,0 +1,28 @@
+﻿
+@{
+    ViewBag.Title = "Listar";
+}
+
+<h2>Listar Alunos</h2>
+
+<table class="table">
+    <tr>
+        <th>Nome</th>
+        <th>Data De Nascimento</th>
+        <th>Desconto</th>
+        <th>Bolsa</th>
+        <th></th>
+    </tr>
+    @{
+        for (int i = 0; i < ViewBag.lista.count; i++)
+        {
+            <tr>
+                <td>@ViewBag.lista[i].Nome</td>
+                <td>@ViewBag.lista[i].DataNascimento</td>
+                <td>@ViewBag.lista[i].Desconto</td>
+                <td>@ViewBag.lista[i].Bolsa</td>    
+            </tr>
+            }
+        }
+</table>
+
