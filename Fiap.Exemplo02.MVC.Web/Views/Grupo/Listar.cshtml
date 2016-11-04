@@ -1,0 +1,35 @@
+﻿
+@{
+    ViewBag.Title = "Listar";
+}
+
+<h2>Listar</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <td>ID</td>
+            <td>Nome Do Grupo</td>
+            <td>Nome Do projeto</td>
+            <td>Data Início</td>
+            <td>Data Término</td>
+            <td>Entregue?</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var i in Model)
+        {
+            <tr>
+                <td>@i.Id</td>
+                <td>@i.Nome</td>
+                <td>@i.Projeto.Nome</td>
+                <td>@i.Projeto.DataInicio</td>
+                <td>@i.Projeto.DataTermino</td>
+                <td>@i.Projeto.Entregue</td>
+            </tr>
+        }
+    </tbody>
+
+</table>
+
+

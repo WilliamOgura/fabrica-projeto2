@@ -10,7 +10,7 @@ namespace Fiap.Exemplo02.MVC.Web.Controllers
     public class GrupoController : Controller
     {
 
-        private GrupoContext _context = new Context();
+        private GrupoContext _context = new GrupoContext();
 
         [HttpGet]
         public ActionResult Cadastrar()
@@ -25,6 +25,12 @@ namespace Fiap.Exemplo02.MVC.Web.Controllers
             _context.SaveChanges();
             TempData["msg"] = "Grupo cadastrado!";
             return RedirectToAction("Cadastrar");
+        }
+
+        public ActionResult Listar()
+        {
+            var lista = _context.Grupo.ToList();
+            return View(lista);
         }
     }
 }

@@ -210,6 +210,7 @@
     <Content Include="Views\Aluno\Listar.cshtml" />
     <Content Include="Views\Aluno\Editar.cshtml" />
     <Content Include="Views\Grupo\Cadastrar.cshtml" />
+    <Content Include="Views\Grupo\Listar.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

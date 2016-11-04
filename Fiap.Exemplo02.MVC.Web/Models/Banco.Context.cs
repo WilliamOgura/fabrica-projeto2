@@ -19,8 +19,14 @@ namespace Fiap.Exemplo02.MVC.Web.Models
             : base("name=AlunoContext")
         {
         }
-    
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        public partial class GrupoContext : DbContext
+        {
+            public GrupoContext()
+                : base("name=GrupoContext")
+            {
+            }
+
+            protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();
         }

@@ -5,12 +5,51 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Nome" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Nome" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="DataNascimento" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="Bolsa" Type="Boolean" Nullable="false" />
     <Property Name="Desconto" Type="Double" />
   </EntityType>
   <EntityContainer Name="AlunoContext" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="Aluno" EntityType="Self.Aluno" />
+    <EntitySet Name="Grupo" EntityType="Fiap.Exemplo02.DatabaseModel.Grupo" />
+    <EntitySet Name="Projeto" EntityType="Fiap.Exemplo02.DatabaseModel.Projeto" />
+    <AssociationSet Name="FK_Projeto_Grupo" Association="Fiap.Exemplo02.DatabaseModel.FK_Projeto_Grupo">
+      <End Role="Grupo" EntitySet="Grupo" />
+      <End Role="Projeto" EntitySet="Projeto" />
+    </AssociationSet>
   </EntityContainer>
+  <EntityType Name="Grupo">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nome" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="Nota" Type="Double" />
+    <NavigationProperty Name="Projeto" Relationship="Fiap.Exemplo02.DatabaseModel.FK_Projeto_Grupo" FromRole="Grupo" ToRole="Projeto" />
+  </EntityType>
+  <EntityType Name="Projeto">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="Nome" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="Descricao" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="DataInicio" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="DataTermino" Type="DateTime" Precision="3" />
+    <Property Name="Entregue" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Grupo" Relationship="Fiap.Exemplo02.DatabaseModel.FK_Projeto_Grupo" FromRole="Projeto" ToRole="Grupo" />
+  </EntityType>
+  <Association Name="FK_Projeto_Grupo">
+    <End Type="Fiap.Exemplo02.DatabaseModel.Grupo" Role="Grupo" Multiplicity="1" />
+    <End Type="Fiap.Exemplo02.DatabaseModel.Projeto" Role="Projeto" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Grupo">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Projeto">
+        <PropertyRef Name="Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>
