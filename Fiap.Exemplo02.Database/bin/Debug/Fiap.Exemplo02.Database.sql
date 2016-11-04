@@ -36,37 +36,112 @@ IF N'$(__IsSqlCmdEnabled)' NOT LIKE N'True'
 
 
 GO
-IF EXISTS (SELECT 1
-           FROM   [master].[dbo].[sysdatabases]
-           WHERE  [name] = N'$(DatabaseName)')
-    BEGIN
-        ALTER DATABASE [$(DatabaseName)]
-            SET ANSI_NULLS ON,
-                ANSI_PADDING ON,
-                ANSI_WARNINGS ON,
-                ARITHABORT ON,
-                CONCAT_NULL_YIELDS_NULL ON,
-                QUOTED_IDENTIFIER ON,
-                ANSI_NULL_DEFAULT ON,
-                CURSOR_DEFAULT LOCAL,
-                RECOVERY FULL 
-            WITH ROLLBACK IMMEDIATE;
-        ALTER DATABASE [$(DatabaseName)]
-            SET AUTO_CLOSE OFF 
-            WITH ROLLBACK IMMEDIATE;
-    END
+USE [$(DatabaseName)];
 
 
 GO
-IF EXISTS (SELECT 1
-           FROM   [master].[dbo].[sysdatabases]
-           WHERE  [name] = N'$(DatabaseName)')
+PRINT N'Dropping [dbo].[FK_Grupo_Projeto]...';
+
+
+GO
+ALTER TABLE [dbo].[Grupo] DROP CONSTRAINT [FK_Grupo_Projeto];
+
+
+GO
+PRINT N'Starting rebuilding table [dbo].[Grupo]...';
+
+
+GO
+BEGIN TRANSACTION;
+
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE;
+
+SET XACT_ABORT ON;
+
+CREATE TABLE [dbo].[tmp_ms_xx_Grupo] (
+    [Id]   INT           IDENTITY (1, 1) NOT NULL,
+    [Nome] VARCHAR (150) NOT NULL,
+    [Nota] FLOAT (53)    NULL,
+    PRIMARY KEY CLUSTERED ([Id] ASC)
+);
+
+IF EXISTS (SELECT TOP 1 1 
+           FROM   [dbo].[Grupo])
     BEGIN
-        ALTER DATABASE [$(DatabaseName)]
-            SET PAGE_VERIFY NONE,
-                DISABLE_BROKER 
-            WITH ROLLBACK IMMEDIATE;
+        SET IDENTITY_INSERT [dbo].[tmp_ms_xx_Grupo] ON;
+        INSERT INTO [dbo].[tmp_ms_xx_Grupo] ([Id], [Nome], [Nota])
+        SELECT   [Id],
+                 [Nome],
+                 [Nota]
+        FROM     [dbo].[Grupo]
+        ORDER BY [Id] ASC;
+        SET IDENTITY_INSERT [dbo].[tmp_ms_xx_Grupo] OFF;
     END
+
+DROP TABLE [dbo].[Grupo];
+
+EXECUTE sp_rename N'[dbo].[tmp_ms_xx_Grupo]', N'Grupo';
+
+COMMIT TRANSACTION;
+
+SET TRANSACTION ISOLATION LEVEL READ COMMITTED;
+
+
+GO
+PRINT N'Starting rebuilding table [dbo].[Projeto]...';
+
+
+GO
+BEGIN TRANSACTION;
+
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE;
+
+SET XACT_ABORT ON;
+
+CREATE TABLE [dbo].[tmp_ms_xx_Projeto] (
+    [Id]          INT           NOT NULL,
+    [Nome]        VARCHAR (150) NOT NULL,
+    [Descricao]   VARCHAR (255) NOT NULL,
+    [DataInicio]  DATETIME      NOT NULL,
+    [DataTermino] DATETIME      NULL,
+    [Entregue]    BIT           NOT NULL,
+    PRIMARY KEY CLUSTERED ([Id] ASC)
+);
+
+IF EXISTS (SELECT TOP 1 1 
+           FROM   [dbo].[Projeto])
+    BEGIN
+        INSERT INTO [dbo].[tmp_ms_xx_Projeto] ([Id], [Nome], [Descricao], [DataInicio], [DataTermino], [Entregue])
+        SELECT   [Id],
+                 [Nome],
+                 [Descricao],
+                 [DataInicio],
+                 [DataTermino],
+                 [Entregue]
+        FROM     [dbo].[Projeto]
+        ORDER BY [Id] ASC;
+    END
+
+DROP TABLE [dbo].[Projeto];
+
+EXECUTE sp_rename N'[dbo].[tmp_ms_xx_Projeto]', N'Projeto';
+
+COMMIT TRANSACTION;
+
+SET TRANSACTION ISOLATION LEVEL READ COMMITTED;
+
+
+GO
+PRINT N'Creating [dbo].[FK_Projeto_Grupo]...';
+
+
+GO
+ALTER TABLE [dbo].[Projeto] WITH NOCHECK
+    ADD CONSTRAINT [FK_Projeto_Grupo] FOREIGN KEY ([Id]) REFERENCES [dbo].[Grupo] ([Id]);
+
+
+GO
+PRINT N'Checking existing data against newly created constraints';
 
 
 GO
@@ -74,18 +149,7 @@ USE [$(DatabaseName)];
 
 
 GO
-PRINT N'Creating [dbo].[Aluno]...';
-
-
-GO
-CREATE TABLE [dbo].[Aluno] (
-    [Id]             INT           IDENTITY (1, 1) NOT NULL,
-    [Nome]           NVARCHAR (50) NOT NULL,
-    [DataNascimento] DATETIME      NOT NULL,
-    [Bolsa]          BIT           NOT NULL,
-    [Desconto]       FLOAT (53)    NULL,
-    PRIMARY KEY CLUSTERED ([Id] ASC)
-);
+ALTER TABLE [dbo].[Projeto] WITH CHECK CHECK CONSTRAINT [FK_Projeto_Grupo];
 
 
 GO

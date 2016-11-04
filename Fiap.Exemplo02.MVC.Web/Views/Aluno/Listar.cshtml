@@ -5,9 +5,15 @@
 
 <h2 class="alert-dismissable">Listar Alunos</h2>
 
+@using (Html.BeginForm("Buscar", "Aluno", FormMethod.Get, new { @class="form-inline"}))
+{
+    @Html.TextBox("nomeBusca", "", new { @class = "form-control" ,placeholder="Pesquisar"})
+    @Helper.Submit("Buscar", "btn btn-success btn-sm")
+}
 <table class="table">
     <thead>
     <tr>
+        <th>ID</th>
         <th>Nome</th>
         <th>Data De Nascimento</th>
         <th>Bolsa</th>
@@ -17,15 +23,16 @@
     </thead>
     <tbody>
        
-        @foreach(var item in Model)
-            {
+        @foreach (var item in Model)
+        {
                 <tr>
+                    <td>@item.Id</td>
                     <td>@item.Nome</td>
                     <td>@item.DataNascimento</td>
                     <td>@item.Bolsa</td>
                     <td>@item.Desconto</td>
                     <td>
-                        @Html.ActionLink("Editar", "Editar", new { id= @item.Id },new { @class="btn btn-primary btn-sm"})
+                        @Html.ActionLink("Editar", "Editar", new { id = @item.Id }, new { @class = "btn btn-primary btn-sm" })
                     </td>
                     <td>    
                     <button onclick="alunoId.value = @item.Id" type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal">

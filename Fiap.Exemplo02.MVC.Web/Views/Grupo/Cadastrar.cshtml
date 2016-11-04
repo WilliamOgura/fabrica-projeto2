@@ -1,0 +1,75 @@
+﻿@model Fiap.Exemplo02.MVC.Web.Models.Grupo
+@{
+    ViewBag.Title = "Cadastrar";
+}
+@if (@TempData["msg"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["msg"]
+    </div>
+}
+
+
+<h2>Cadastrar Grupos e Projetos</h2>
+
+using(@Html.BeginForm())
+{
+<div class="row">
+    <div class="col-md-12">
+        <div class="form-group">
+            @Html.LabelFor(g=>g.Nome)
+            @Html.TextBoxFor(g=>g.Nome)
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="form-group">
+            @Html.LabelFor(g => g.Projeto.Nome)
+            @Html.TextBoxFor(g => g.Projeto.Nome)
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="form-group">
+            @Html.LabelFor(g => g.Projeto.Descricao)
+            @Html.TextBoxFor(g => g.Projeto.Descricao)
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="form-group">
+            @Html.LabelFor(g => g.Projeto.DataInicio)
+            @Html.TextBoxFor(g => g.Projeto.DataInicio)
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="form-group">
+            @Html.LabelFor(g => g.Projeto.DataTermino)
+            @Html.TextBoxFor(g => g.Projeto.DataTermino)
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="form-group">
+            @Html.LabelFor(g => g.Projeto.Entregue)
+            @Html.CheckBoxFor(g => g.Projeto.Entregue)
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<div class="form-group">
+    <input type="submit" class="btn btn-primary" />
+</div>
+}

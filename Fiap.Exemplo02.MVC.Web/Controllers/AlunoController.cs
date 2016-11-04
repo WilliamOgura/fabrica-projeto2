@@ -57,5 +57,12 @@ namespace Fiap.Exemplo02.MVC.Web.Controllers
             TempData["msg"] = "Aluno Expulso!";
             return RedirectToAction("Listar");
         }
+        public ActionResult Buscar(string nomeBusca)
+        {
+            //Busca o aluno no banco por parte do nome
+            var lista = _context.Aluno.Where(a => a.Nome.Contains(nomeBusca)).ToList();
+            //Retorna para a View "LISTAR" com a lista
+            return View("Listar",lista);
+        }
     }
 }
