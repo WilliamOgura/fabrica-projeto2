@@ -3,3 +3,8 @@ C:\Users\rm75941\Desktop\Projeto2Fabrica\Fiap.Exemplo02.MVC.Web\Fiap.Exemplo02.D
 C:\Users\rm75941\Desktop\Projeto2Fabrica\Fiap.Exemplo02.MVC.Web\Fiap.Exemplo02.Database\bin\Debug\Fiap.Exemplo02.Database.pdb
 C:\Users\rm75941\Desktop\Projeto2Fabrica\Fiap.Exemplo02.MVC.Web\Fiap.Exemplo02.Database\obj\Debug\Fiap.Exemplo02.Database.dll
 C:\Users\rm75941\Desktop\Projeto2Fabrica\Fiap.Exemplo02.MVC.Web\Fiap.Exemplo02.Database\obj\Debug\Fiap.Exemplo02.Database.pdb
+C:\Users\rm75941\Desktop\New folder\fabrica-projeto2\Fiap.Exemplo02.Database\bin\Debug\Fiap.Exemplo02.Database.dacpac
+C:\Users\rm75941\Desktop\New folder\fabrica-projeto2\Fiap.Exemplo02.Database\bin\Debug\Fiap.Exemplo02.Database.dll
+C:\Users\rm75941\Desktop\New folder\fabrica-projeto2\Fiap.Exemplo02.Database\bin\Debug\Fiap.Exemplo02.Database.pdb
+C:\Users\rm75941\Desktop\New folder\fabrica-projeto2\Fiap.Exemplo02.Database\obj\Debug\Fiap.Exemplo02.Database.dll
+C:\Users\rm75941\Desktop\New folder\fabrica-projeto2\Fiap.Exemplo02.Database\obj\Debug\Fiap.Exemplo02.Database.pdb

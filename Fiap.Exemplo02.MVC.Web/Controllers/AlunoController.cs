@@ -29,8 +29,33 @@ namespace Fiap.Exemplo02.MVC.Web.Controllers
         }
         public ActionResult Listar()
         {
-            var lista = _context.Aluno.ToList();
+           var lista = _context.Aluno.ToList();
             return View(lista);
+        }
+        [HttpGet]
+        public ActionResult Editar(int id)
+        {
+            //Buscar o objeto (aluno) no banco
+            var aluno = _context.Aluno.Find(id);
+            //Envia o objeto para a view de Edição
+            return View(aluno);
+        }
+        [HttpPost]
+        public ActionResult Editar(Aluno aluno)
+        {
+            _context.Entry(aluno).State = System.Data.Entity.EntityState.Modified;
+            _context.SaveChanges();
+            TempData["msg"] = "Aluno Atualizado!";
+            return RedirectToAction("Listar");
+        }
+
+        public ActionResult Excluir(int alunoId)
+        {
+            Aluno aluno = _context.Aluno.Find(alunoId);
+            _context.Aluno.Remove(aluno);
+            _context.SaveChanges();
+            TempData["msg"] = "Aluno Expulso!";
+            return RedirectToAction("Listar");
         }
     }
 }
